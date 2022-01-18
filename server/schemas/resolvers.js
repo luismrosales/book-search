@@ -4,18 +4,20 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: (parent, args, context) => {
+    me: async (parent, args, context) => {
       if (context.user) {
-        User.findOne({
+        const user = await User.findOne({
           _id: context.user._id,
         });
+        return user;
       }
+      throw new AuthenticationError("User not logged in");
     },
   },
   Mutation: {
-    login: (parent, args, context) => {
+    login: async (parent, args, context) => {
       const user = await User.findOne({
-        $or: [{ username: args.username }, { email: args.email }],
+        email: args.email,
       });
       if (!user) {
         throw new AuthenticationError("Incorrect credentials");
@@ -27,7 +29,7 @@ const resolvers = {
         throw new AuthenticationError("Incorrect credentials");
       }
       const token = signToken(user);
-      res.json({ token, user });
+      return { token, user };
     },
     addUser: async (parent, args) => {
       const user = await User.create(args);
