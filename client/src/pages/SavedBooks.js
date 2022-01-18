@@ -1,4 +1,4 @@
-import React, { useState, useQuery } from "react";
+import React, { useState } from "react";
 import {
   Jumbotron,
   Container,
