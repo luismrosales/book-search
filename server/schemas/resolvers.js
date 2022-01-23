@@ -51,17 +51,17 @@ const resolvers = {
         throw new AuthenticationError("No saved books");
       }
     },
-    remvoveBook: async (parent, { bookId }, context) => {
-      const updatedUser = await User.findOneAndUpdate(
-        { _id: user._id },
-        { $pull: { savedBooks: { bookId: params.bookId } } },
-        { new: true }
-      );
-      if (!updatedUser) {
-        throw new AuthenticationError("Couldnt find user with this id");
-      }
-      return updatedUser;
-    },
+    // remvoveBook: async (parent, { bookId }, context) => {
+    //   const updatedUser = await User.findOneAndUpdate(
+    //     { _id: user._id },
+    //     { $pull: { savedBooks: { bookId: params.bookId } } },
+    //     { new: true }
+    //   );
+    //   if (!updatedUser) {
+    //     throw new AuthenticationError("Couldnt find user with this id");
+    //   }
+    //   return updatedUser;
+    // },
   },
 };
 
